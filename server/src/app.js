@@ -17,11 +17,11 @@ app.use('/api/skills', skillRoutes);
 app.use('/api/tasks', taskRoutes);
 
 // Serve static files from the React app build directory
-app.use(express.static(path.join(__dirname, '../client/dist')));
+app.use(express.static(path.join(__dirname, '../../client/dist')));
 
 // Catch all handler: send back React's index.html file for any non-API routes
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+  res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
 });
 
 module.exports = app;
