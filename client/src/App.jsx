@@ -8,7 +8,7 @@ import TaskDetail from './pages/TaskDetail';
 
 export default function App() {
   return (
-    <Router>
+    <Router basename="/skillmirror">
       <Routes>
         <Route path="/login" element={<Login />} />
         
