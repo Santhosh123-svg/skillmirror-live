@@ -1,9 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: process.env.NODE_ENV === 'production'
-    ? 'https://skillmirror.onrender.com'
-    : 'http://localhost:5000',
+  baseURL: import.meta.env.VITE_API_URL || 'https://skillmirror-10.onrender.com',
 });
 
 API.interceptors.request.use((config) => {
