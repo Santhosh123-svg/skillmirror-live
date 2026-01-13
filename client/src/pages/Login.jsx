@@ -20,7 +20,7 @@ export default function Login() {
     try {
       console.log('📝 Attempting REGISTER with:', { name, email, password: '***' });
       
-      const response = await API.post('/api/auth/register', {
+      const response = await API.post('/api/register', {
         name,
         email,
         password,

@@ -13,10 +13,10 @@ API.interceptors.request.use((config) => {
 });
 
 export const loginUser = (email, password) =>
-  API.post('/api/auth/login', { email, password });
+  API.post('/api/login', { email, password });
 
 export const registerUser = (name, email, password) =>
-  API.post('/api/auth/register', { name, email, password });
+  API.post('/api/register', { name, email, password });
 
 export const getAllSkills = () => API.get('/api/skills');
 
