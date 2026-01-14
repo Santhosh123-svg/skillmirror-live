@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
@@ -18,12 +18,13 @@ app.use("/api/auth", authRoutes);
 app.use("/api/skills", skillRoutes);
 app.use("/api/tasks", taskRoutes);
 
-// Serve static files from the React app build directory
-app.use(express.static(path.join(__dirname, '../client/dist')));
+/* 🔥 CORRECT CLIENT DIST PATH */
+const clientPath = path.resolve(__dirname, "../../client/dist");
 
-// Catch-all handler: send back React's index.html file for any non-API routes
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+app.use(express.static(clientPath));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(clientPath, "index.html"));
 });
 
 const PORT = process.env.PORT || 5000;
