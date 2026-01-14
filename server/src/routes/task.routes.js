@@ -1,9 +1,10 @@
-const express = require('express');
+const express = require("express");
 const authMiddleware = require('../middleware/auth.middleware');
-const { 
-  getTasksBySkill, 
-  getUserTasks, 
-  submitTask, 
+
+const {
+  getTasksBySkill,
+  getUserTasks,
+  submitTask,
   createTask,
   getTaskById  // ← ADD THIS (if controller has it)
 } = require('../controllers/task.controller');
@@ -20,3 +21,4 @@ router.post('/', authMiddleware, createTask);
 router.post('/:taskId/submit', authMiddleware, submitTask);  // ← CHANGE FROM PUT to POST
 
 module.exports = router;
+

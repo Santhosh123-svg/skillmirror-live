@@ -1,7 +1,10 @@
-const express = require('express');
-const cors = require('cors');
-const path = require('path');
-require('./config/db');
+import express from 'express';
+import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import './config/db.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 
@@ -11,9 +14,9 @@ app.use(express.static(path.join(__dirname, '../../client/dist')));
 app.use(cors());
 app.use(express.json());
 
-const authRoutes = require('./routes/auth.routes');
-const skillRoutes = require('./routes/skill.routes');
-const taskRoutes = require('./routes/task.routes');
+import authRoutes from './routes/auth.routes.js';
+import skillRoutes from './routes/skill.routes.js';
+import taskRoutes from './routes/task.routes.js';
 
 app.use('/api/auth', authRoutes);
 app.use('/api/skills', skillRoutes);
@@ -24,4 +27,10 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
 });
 
-module.exports = app;
+// Global error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: 'Something went wrong!' });
+});
+
+export default app;

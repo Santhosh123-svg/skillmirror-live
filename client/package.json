@@ -2,14 +2,12 @@
   "name": "client",
   "private": true,
   "version": "0.0.0",
-  "homepage": "/skillmirror/",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "lint": "eslint .",
     "preview": "vite preview",
     "build": "vite build",
-    "deploy": "gh-pages -d dist",
     "tailwind:init": "tailwindcss init -p"
 
   },

@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 
 const skillStatusSchema = new mongoose.Schema({
@@ -9,4 +9,4 @@ status: String
 },{ timestamps:true });
 
 
-export default mongoose.model("SkillStatus", skillStatusSchema);
+module.exports = mongoose.model("SkillStatus", skillStatusSchema);

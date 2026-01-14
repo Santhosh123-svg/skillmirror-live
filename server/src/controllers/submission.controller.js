@@ -1,6 +1,6 @@
-import Submission from "../models/Submission.js";
+const Submission = require("../models/Submission");
 
-export const submitTask = async (req, res) => {
+const submitTask = async (req, res) => {
   const submission = await Submission.create({
     user: req.user.id,
     task: req.body.taskId,

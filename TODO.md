@@ -1,26 +1,35 @@
-# MERN Stack Deployment Plan
+# SkillMirror MERN Cleanup Plan
 
-## Information Gathered
-- Frontend: React (Vite) in /client
-- Backend: Express + MongoDB in /server
-- MongoDB Atlas connection works
-- Skills data exists at /api/skills
-- Previous separate deployments caused CORS, API path, and 404 issues
+## 1. Delete Unnecessary Files and Folders
+- [ ] Delete all node_modules/ folders (root, client/, server/)
+- [ ] Delete client/dist/
+- [ ] Delete assets/ (root build output)
+- [ ] Delete .env and .env.production files
+- [ ] Delete .github/ folder
+- [ ] Delete client/public/_redirects
+- [ ] Delete root index.html, .nojekyll, san.svg
+- [ ] Delete any other build/cache files
 
-## Plan
-- [x] Update server/src/app.js to serve React static files and handle client-side routing
-- [x] Update root package.json for monorepo deployment scripts
-- [x] Update client/src/utils/api.js to use relative API paths
-- [x] Ensure server/src/server.js is correct (no changes needed)
-- [x] Update client/vite.config.js for production build (if needed)
+## 2. Create Environment Templates
+- [ ] Create client/.env.example with VITE_API_BASE_URL=http://localhost:5000
+- [ ] Create server/.env.example with PORT=5000, MONGODB_URI=, JWT_SECRET=
 
-## Dependent Files to Edit
-- server/src/app.js: Added static file serving and catch-all route
-- package.json: Updated for monorepo setup
-- client/src/utils/api.js: Changed API_BASE_URL to empty string for relative paths
+## 3. Standardize Backend
+- [ ] Rename server/src/server.js to server/src/index.js
+- [ ] Update server/package.json "main" and "start" script
+- [ ] Update root package.json "main" reference
+- [ ] Add global error handling middleware to server/src/app.js
+- [ ] Ensure proper middleware order in app.js
 
-## Followup Steps
-- [ ] Test locally: npm run build && npm start
-- [ ] Deploy to Render as Web Service
-- [ ] Set environment variables in Render (MONGO_URI, JWT_SECRET, etc.)
-- [ ] Verify frontend loads and API calls work
+## 4. Standardize Frontend
+- [ ] Remove "homepage" from client/package.json
+- [ ] Remove "deploy" script from client/package.json
+- [ ] Ensure client/src/utils/api.js uses env var correctly
+
+## 5. Update Root Structure
+- [ ] Ensure root only has package.json, package-lock.json, README.md, .gitignore
+
+## 6. Final Verification
+- [ ] Run npm install in root, client, server
+- [ ] Test local development setup
+- [ ] Confirm clean structure and no hardcoded URLs
