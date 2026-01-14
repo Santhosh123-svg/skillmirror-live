@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
-import API from '../api/api';
+import { getSkills } from '../utils/api';
 import '../styles/pages.css';
 
 export default function Skills() {
@@ -15,8 +15,8 @@ export default function Skills() {
 
   const fetchSkills = async () => {
     try {
-      const response = await API.get('/skills');
-      setSkills(response.data);
+      const response = await getSkills();
+      setSkills(response);
     } catch (error) {
       console.error('Failed to fetch skills:', error);
     } finally {

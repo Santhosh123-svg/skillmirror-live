@@ -73,3 +73,46 @@ export const getTasks = async () => {
     throw error.message || 'Failed to fetch tasks';
   }
 };
+
+export const getTasksBySkill = async (skillId) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/tasks/skill/${skillId}`, {
+      method: 'GET',
+      headers: getAuthHeaders(),
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message);
+    return data;
+  } catch (error) {
+    throw error.message || 'Failed to fetch tasks by skill';
+  }
+};
+
+export const getTaskById = async (taskId) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/tasks/${taskId}`, {
+      method: 'GET',
+      headers: getAuthHeaders(),
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message);
+    return data;
+  } catch (error) {
+    throw error.message || 'Failed to fetch task';
+  }
+};
+
+export const submitTask = async (taskId, submissionContent, language) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/tasks/${taskId}/submit`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ submissionContent, language }),
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message);
+    return data;
+  } catch (error) {
+    throw error.message || 'Failed to submit task';
+  }
+};

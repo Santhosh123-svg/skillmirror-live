@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
-import API from '../api/api';
+import { getTaskById, submitTask } from '../utils/api';
 import '../styles/pages.css';
 
 export default function TaskDetail() {
@@ -19,15 +19,14 @@ export default function TaskDetail() {
 
   const fetchTask = async () => {
     try {
-      const res = await API.get(`/tasks/${taskId}`);
-      const data = res.data;
+      const data = await getTaskById(taskId);
       setTask(data);
       setCode(data.submissionContent || '');
-      
+
       // Auto-detect language from task title (don't let user change)
       const detectedLanguage = detectLanguage(data.title);
       setLanguage(detectedLanguage);
-      
+
       console.log('📖 Task loaded:', data.title, '| Status:', data.status);
     } catch (error) {
       console.error('Error fetching task:', error);
@@ -59,12 +58,8 @@ export default function TaskDetail() {
 
     setLoading(true);
     try {
-      const res = await API.post(`/tasks/${taskId}/submit`, {
-        submissionContent: code,
-        language
-      });
+      const data = await submitTask(taskId, code, language);
 
-      const data = res.data;
       setValidationResult(data.validationResult);
       setTask(data.task);
 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
-import API from '../api/api';
+import { getTasksBySkill } from '../utils/api';
 import '../styles/pages.css';
 
 export default function Tasks() {
@@ -16,8 +16,8 @@ export default function Tasks() {
 
   const fetchTasks = async () => {
     try {
-      const response = await getTasks(skillId);
-      setTasks(response.data);
+      const response = await getTasksBySkill(skillId);
+      setTasks(response);
     } catch (error) {
       console.error('Failed to fetch tasks:', error);
     } finally {
