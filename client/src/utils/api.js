@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://skillmirror-10.onrender.com';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('token');

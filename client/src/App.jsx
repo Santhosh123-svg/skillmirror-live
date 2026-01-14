@@ -1,4 +1,5 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Skills from './pages/Skills';
@@ -6,7 +7,16 @@ import Tasks from './pages/Tasks';
 import ProtectedRoute from './components/ProtectedRoute';
 import TaskDetail from './pages/TaskDetail';
 
-export default function App() {
+export default function App({ initialPath }) {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (initialPath && initialPath !== '/' && location.pathname === '/') {
+      navigate(initialPath, { replace: true });
+    }
+  }, [initialPath, navigate, location.pathname]);
+
   return (
     <Routes>
       <Route path="/" element={<Login />} />

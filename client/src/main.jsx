@@ -6,10 +6,21 @@ import './styles/index.css'
 import './styles/pages.css'
 import './styles/global.css'
 
+// Handle client-side routing for GitHub Pages
+const getInitialPath = () => {
+  const path = window.location.search.slice(1).split('&')[0];
+  if (path) {
+    return path.replace(/~and~/g, '&');
+  }
+  return '/';
+};
+
+const initialPath = getInitialPath();
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <App initialPath={initialPath} />
     </BrowserRouter>
   </React.StrictMode>
 )
