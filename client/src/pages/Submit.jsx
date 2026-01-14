@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
-import API from '../api/api';
+import { submitTask } from '../utils/api';
 import '../styles/pages.css';
 
 export default function Submit() {

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
-import API from '../api/api';
+import { getTaskById, submitTask } from '../utils/api';
 import '../styles/pages.css';
 
 export default function SubmitTask() {
@@ -20,22 +20,22 @@ export default function SubmitTask() {
   useEffect(() => {
     const fetchTask = async () => {
       try {
-        const response = await API.get(`/tasks/${taskId}`);
-        setTaskData(response.data);
-        
-        if (response.data.status === 'completed') {
+        const response = await getTaskById(taskId);
+        setTaskData(response);
+
+        if (response.status === 'completed') {
           setCompleted(true);
         }
-        
-        const detectedLanguage = detectLanguage(response.data.title);
+
+        const detectedLanguage = detectLanguage(response.title);
         setLanguage(detectedLanguage);
-        console.log(`📝 Task: ${response.data.title}`);
+        console.log(`📝 Task: ${response.title}`);
         console.log(`🔤 Auto-detected language: ${detectedLanguage}`);
       } catch (error) {
         console.error('Error fetching task:', error);
       }
     };
-    
+
     fetchTask();
   }, [taskId]);
 
@@ -79,28 +79,25 @@ export default function SubmitTask() {
 
     try {
       console.log('📤 Submitting task:', { taskId, code, language });
-      
-      const response = await API.post(`/tasks/${taskId}/submit`, {
-        submissionContent: code,
-        language: language
-      });
 
-      console.log('✅ Task submitted:', response.data);
-      
-      const { validationResult: result } = response.data;
+      const response = await submitTask(taskId, code, language);
+
+      console.log('✅ Task submitted:', response);
+
+      const { validationResult: result } = response;
       setValidationResult(result);
       setAttempts(attempts + 1);
-      
+
       if (result.isCorrect) {
         console.log('🎉 Task Completed! All tests passed!');
         alert(`🎉 Perfect! All tests passed!\nScore: ${result.score}%\n\nTask completed! Redirecting...`);
-        
+
         setCompleted(true);
-        
+
         setTimeout(() => {
           navigate(-1);
         }, 2000);
-        
+
       } else {
         console.log(`⚠️ Partial Success: ${result.passedTests}/${result.totalTests} tests passed`);
         setShowResults(true);

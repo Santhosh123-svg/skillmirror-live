@@ -5,6 +5,9 @@ require('./config/db');
 
 const app = express();
 
+// Serve static files from the React app build directory
+app.use(express.static(path.join(__dirname, '../../client/dist')));
+
 app.use(cors());
 app.use(express.json());
 
@@ -15,5 +18,10 @@ const taskRoutes = require('./routes/task.routes');
 app.use('/api/auth', authRoutes);
 app.use('/api/skills', skillRoutes);
 app.use('/api/tasks', taskRoutes);
+
+// Catch all handler: send back React's index.html file for client-side routing
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
+});
 
 module.exports = app;
