@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import API from '../api/api';
+import { loginUser, registerUser } from '../utils/api';
 import '../styles/pages.css';
 
 export default function Login() {
@@ -19,20 +19,14 @@ export default function Login() {
 
     try {
       console.log('📝 Attempting REGISTER with:', { name, email, password: '***' });
-      
-      const response = await API.post('/api/register', {
-        name,
-        email,
-        password,
-      });
-      
-      console.log('✅ Register success:', response.data);
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('user', JSON.stringify(response.data.user));
+
+      const data = await registerUser(name, email, password);
+
+      console.log('✅ Register success:', data);
       navigate('/dashboard');
     } catch (err) {
-      console.error('❌ Register failed:', err.response?.data);
-      setError(err.response?.data?.message || 'Registration failed!');
+      console.error('❌ Register failed:', err);
+      setError(err || 'Registration failed!');
     } finally {
       setLoading(false);
     }
@@ -45,19 +39,14 @@ export default function Login() {
 
     try {
       console.log('🔍 Attempting LOGIN with:', { email, password: '***' });
-      
-      const response = await API.post('/api/auth/login', {
-        email,
-        password,
-      });
-      
-      console.log('✅ Login success:', response.data);
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('user', JSON.stringify(response.data.user));
+
+      const data = await loginUser(email, password);
+
+      console.log('✅ Login success:', data);
       navigate('/dashboard');
     } catch (err) {
-      console.error('❌ Login failed:', err.response?.data);
-      setError(err.response?.data?.message || 'Login failed!');
+      console.error('❌ Login failed:', err);
+      setError(err || 'Login failed!');
     } finally {
       setLoading(false);
     }

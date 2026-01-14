@@ -12,7 +12,7 @@ const authRoutes = require('./routes/auth.routes');
 const skillRoutes = require('./routes/skill.routes');
 const taskRoutes = require('./routes/task.routes');
 
-app.use('/api', authRoutes);
+app.use('/api/auth', authRoutes);
 app.use('/api/skills', skillRoutes);
 app.use('/api/tasks', taskRoutes);
 
